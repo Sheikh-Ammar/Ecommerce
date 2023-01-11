@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'email_verified',
     ];
 
     /**
@@ -42,11 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // USER ONE-MANY PRODUCTS
     public function product()
     {
         return $this->hasMany(Product::class);
     }
 
+    // USER ONE-MANY ORDERS
     public function order()
     {
         return $this->hasMany(Order::class);

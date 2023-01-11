@@ -23,8 +23,12 @@ class ProductSeeder extends Seeder
             DB::table('products')->insert([
                 'title' => $faker->title(),
                 'description' =>  $faker->text(),
-                'image' => $faker->image,
                 'price' => rand(300, 1000),
+                'discountPercentage' => rand(3.95, 9.85),
+                'rating' => rand(1, 100),
+                'stock' => rand(1, 50),
+                'brand' => $faker->word(),
+                'image' => $faker->imageUrl(640, 480, 'products', true),
                 'category_id' => Category::inRandomOrder()->first()->id,
                 'created_at' => now(),
                 'updated_at' => now(),

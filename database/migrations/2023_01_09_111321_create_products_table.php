@@ -17,10 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('title', 100);
             $table->text('description');
-            $table->string('image', 50);
             $table->integer('price');
+            $table->float('discountPercentage');
+            $table->float('rating');
+            $table->integer('stock');
+            $table->string('brand');
+            $table->string('image', 100);
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
