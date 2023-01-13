@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -18,9 +17,12 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
+        $data = [];
+        $size = 2000;
         $faker = Faker::create();
-        foreach (range(1, 100) as $value) {
-            DB::table('products')->insert([
+
+        for ($i = 0; $i <= $size; $i++) {
+            $data[] = [
                 'title' => $faker->title(),
                 'description' =>  $faker->text(),
                 'price' => rand(300, 1000),
@@ -29,10 +31,15 @@ class ProductSeeder extends Seeder
                 'stock' => rand(1, 50),
                 'brand' => $faker->word(),
                 'image' => $faker->imageUrl(640, 480, 'products', true),
-                'category_id' => Category::inRandomOrder()->first()->id,
+                'category_id' => rand(1, 10),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+            ];
         }
+
+        $chunksData = array_chunk($data, $size);
+        foreach ($chunksData as $chunk) {
+            Product::insert($chunk);
+        };
     }
 }
