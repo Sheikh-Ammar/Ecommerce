@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    // SHOW ALL PRODUCTS
     public function index()
     {
         $products = Product::with('category:id,name')->paginate(10);
@@ -18,6 +19,23 @@ class ProductController extends Controller
         ], 200);
     }
 
+    // SHOW SPECIDIC PRODUCT ON THE BASE OF ID
+    public function show($id)
+    {
+        $product = Product::find($id);
+        if ($product) {
+            $product->get();
+            return response()->json([
+                'product' => $product,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Given Id product not found',
+            ], 404);
+        }
+    }
+
+    // ADD PRODUCT
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
@@ -34,21 +52,7 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function show($id)
-    {
-        $product = Product::find($id);
-        if ($product) {
-            $product->get();
-            return response()->json([
-                'product' => $product,
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Given Id product not found',
-            ], 404);
-        }
-    }
-
+    // UPDATE PRODUCT
     public function update(ProductRequest $request, $id)
     {
         $data = $request->validated();
@@ -76,6 +80,7 @@ class ProductController extends Controller
         }
     }
 
+    // DELETE PRODUCT
     public function destroy($id)
     {
         $product = Product::findorFail($id);
@@ -89,10 +94,13 @@ class ProductController extends Controller
         ], 200);
     }
 
-    // public function search(Request $request)
-    // {
-    //     $query = $request->get('query');
-    //     $products = Product::where('title', 'like', "%{$query}%")->get();
-    //     return response()->json($products);
-    // }
+    // SEARCH PRODUCT
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+        $products = Product::where('title', 'like', "%{$query}%")->orwhere('description', 'like', "%{$query}%")->get();
+        return response()->json([
+            'products' => $products,
+        ], 200);
+    }
 }

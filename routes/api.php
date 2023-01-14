@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,17 @@ Route::controller(ProductController::class)->middleware(['auth:api', 'admin'])->
     Route::post('/product', 'store'); //PROTECTED ONLY ADMIN ROUTE
     Route::put('/product/{id}', 'update')->whereNumber('id'); //PROTECTED ROUTE ONLY FOR ADMIN 
     Route::delete('/product/{id}', 'destroy')->whereNumber('id'); //PROTECTED ROUTE ONLY FOR ADMIN 
+});
+
+// ORDERS
+Route::controller(OrderController::class)->middleware(['auth:api', 'admin'])->group(function () {
+    // PROTECTED ROUTESs
+    Route::get('/order', 'index');
+    Route::get('/order/{id}', 'show')->whereNumber('id');
+    Route::get('/user/order/{id}', 'userOrder')->whereNumber('id');
+    Route::post('/order', 'store')->withoutMiddleware('admin');
+    Route::put('/order/{id}', 'update')->whereNumber('id');
+    Route::delete('/order/{id}', 'destroy')->whereNumber('id');
 });
 
 // CONTACT

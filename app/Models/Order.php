@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'product_id'];
+
     // ORDER ONE-MANY USER
     public function user()
     {

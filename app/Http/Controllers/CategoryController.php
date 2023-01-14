@@ -9,6 +9,7 @@ use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
+    // SHOW ALL CATEGORIES
     public function index()
     {
         $categories = Category::paginate(5);
@@ -17,16 +18,7 @@ class CategoryController extends Controller
         ], 200);
     }
 
-    public function store(CategoryRequest $request)
-    {
-        $validateData = $request->validated();
-        $data = array_merge($validateData, ['slug' => Str::slug($validateData['name'])]);
-        Category::create($data);
-        return response()->json([
-            'message' => 'New Category Added',
-        ], 200);
-    }
-
+    // SHOW SPECIFIC CATEGORY ON THE BASE OF SLUG
     public function show($slug)
     {
         $category = Category::where('slug', $slug)->first();
@@ -42,6 +34,18 @@ class CategoryController extends Controller
         }
     }
 
+    // ADD CATEGORY
+    public function store(CategoryRequest $request)
+    {
+        $validateData = $request->validated();
+        $data = array_merge($validateData, ['slug' => Str::slug($validateData['name'])]);
+        Category::create($data);
+        return response()->json([
+            'message' => 'New Category Added',
+        ], 200);
+    }
+
+    // UPDATE CATEGORY
     public function update(CategoryRequest $request, $slug)
     {
         $validateData = $request->validated();
@@ -59,6 +63,7 @@ class CategoryController extends Controller
         }
     }
 
+    // DELETE CATEGORY
     public function destroy($slug)
     {
         $category = Category::where('slug', $slug)->first();

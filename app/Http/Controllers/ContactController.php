@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    // SHOW ALL CONTACT DATA
     public function index()
     {
         $contact = Contact::paginate(5);
@@ -16,15 +17,7 @@ class ContactController extends Controller
         ], 200);
     }
 
-    public function store(ContactRequest $request)
-    {
-        $data = $request->validated();
-        Contact::create($data);
-        return response()->json([
-            'message' => 'Category Added',
-        ], 200);
-    }
-
+    // SHOW SPECIFIC CONTACT DATA ON THE BASE OF ID
     public function show($id)
     {
         $contact = Contact::find($id);
@@ -40,6 +33,17 @@ class ContactController extends Controller
         }
     }
 
+    // ADD CONTACT
+    public function store(ContactRequest $request)
+    {
+        $data = $request->validated();
+        Contact::create($data);
+        return response()->json([
+            'message' => 'Category Added',
+        ], 200);
+    }
+
+    // UPDATE CONTACT DATA
     public function update(ContactRequest $request, $id)
     {
         $data = $request->validated();
@@ -56,6 +60,7 @@ class ContactController extends Controller
         }
     }
 
+    // DELETE CONTACT DATA
     public function destroy($id)
     {
         $contact = Contact::findorFail($id);

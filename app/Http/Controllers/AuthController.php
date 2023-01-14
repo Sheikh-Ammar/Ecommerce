@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // REGISTER USER
     public function register(UserRequest $request)
     {
         $validateData = $request->validated();
@@ -20,11 +21,12 @@ class AuthController extends Controller
         ], 200);
     }
 
-
+    // VERIFY USER EMAIL
     public function email_verify()
     {
     }
 
+    // LOGIN USER
     public function login(UserRequest $request)
     {
         $validateData = $request->safe()->only(['email', 'password']);
@@ -41,6 +43,7 @@ class AuthController extends Controller
         ], 200);
     }
 
+    // LOGOUT USER
     public function logout()
     {
         $accessToken = Auth::user()->token();
