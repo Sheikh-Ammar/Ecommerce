@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     // REGISTER USER
-    public function register(UserRequest $request)
+    public function register(AuthRequest $request)
     {
         $validateData = $request->validated();
         $user = User::create($validateData);
@@ -27,7 +27,7 @@ class AuthController extends Controller
     }
 
     // LOGIN USER
-    public function login(UserRequest $request)
+    public function login(AuthRequest $request)
     {
         $validateData = $request->safe()->only(['email', 'password']);
         $user = User::where('email', $validateData['email'])->first();

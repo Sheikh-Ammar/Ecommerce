@@ -23,17 +23,11 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->routeIs('login')) {
-            return [
-                'email' => 'required|email',
-                'password' => 'required|min:5',
-            ];
-        } else {
-            return [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed|min:5',
-            ];
-        }
+        return [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5',
+            'role' => 'required|integer||between:0,1',
+        ];
     }
 }

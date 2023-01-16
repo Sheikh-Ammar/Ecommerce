@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,6 +14,16 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register')->name('register'); //PUBLIC ROUTE
     Route::post('/login', 'login')->name('login'); //PUBLIC ROUTE
     Route::post('/logout', 'logout')->name('logout')->middleware('auth:api'); //PROTECTED AUTH ROUTE
+});
+
+// USERS
+Route::controller(UserController::class)->middleware(['auth:api', 'admin'])->group(function () {
+    // ALL PROTECTED ROUTE ONLY FOR ADMIN 
+    Route::get('/user', 'index');
+    Route::get('/user/{id}', 'show')->whereNumber('id')->whereNumber('id');
+    Route::post('/user', 'store');
+    Route::put('/user/{id}', 'update')->whereNumber('id')->whereNumber('id');
+    Route::delete('/user/{id}', 'destroy')->whereNumber('id')->whereNumber('id');
 });
 
 // CATEGORIES
