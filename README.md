@@ -1,6 +1,6 @@
 ## Laravel Ecommerce Platform
 
-This is a e-commerce api's that I made mostly using Laravel ^9.0
+This is a e-commerce api's thata I made mostly using Laravel ^9.0
 
 | [Features][] | [Requirements][] | [Install][] | [How to setting][] | [License][] |
 
@@ -15,7 +15,7 @@ This is a e-commerce api's that I made mostly using Laravel ^9.0
 
 ## Requirements
 
-    PHP = ^8.0
+    PHP = 8.0
     laravel = ^9.0
 
 ## Install
